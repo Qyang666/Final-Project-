@@ -24,7 +24,9 @@
         <th>Last name</th>
         <th>Email</th>
         <th>Member Since</th>
+        
     </tr>
+
     {% for friend in user_friends_profiles %}
     <tr>
         <td>{{friend}}</td>
@@ -34,6 +36,7 @@
         <td>{{friend.created|date:"M d Y"}}</td>
     </tr>
     {% endfor %}
+
 </table>
 <br><br>
 
@@ -45,7 +48,6 @@
         <th>Last Name</th>
         <th>Date Sent</th>
         <th>Status</th>
-
     </tr>
     <tr>
         {%for r in user_relationships %}
@@ -77,7 +79,9 @@
         <td>{{profile}}</td>
         <td>{{profile.first_name}}</td>
         <td>{{profile.last_name}}</td>
-        <td><input type="chatbox" name="send_requests" value="{{profile.id}}"></td>
+        <td><input type="checkbox" name="send_requests" value="{{profile.id}}"></td>
+        
+
     </tr>
     {% endfor %}
     </table>
@@ -103,13 +107,17 @@
         <td>{{rr.sender}}</td>
         <td>{{rr.sender.first_name}}</td>
         <td>{{rr.sender.last_name}}</td>
-        <td><input type="chatbox" name="receive_requests" value="{{rr.id}}"></td>
+        <td><input type="checkbox" name="receive_requests" value="{{rr.id}}"></td>
+        
     </tr>
     {% endfor %}
+
     </table>
     <br><br>
-    <button name="submit" class="btn btn-outline-primary" style='float:left;'> Approve Request</button>
+    <button name="submit" class="btn btn-outline-primary" style='float:left;'>Approve Request</button>
     <br><br><br><br>
+
+
 </form>
 
 <br><br><br><br>
