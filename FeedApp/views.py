@@ -19,20 +19,19 @@ def index(request):
 
 @login_required
 def profile(request):
-    profile= Profile.objects.filter(user=request.user)
+    profile = Profile.objects.filter(user=request.user)
     if not profile.exists():
         Profile.objects.create(user=request.user)
     profile = Profile.objects.get(user=request.user)
-
+    
     if request.method != 'POST':
         form=ProfileForm(instance=profile)
     else:
         form = ProfileForm(instance=profile, data=request.POST)
-
         if form.is_valid():
             form.save()
             return redirect('FeedApp:profile')
-    
+
     context = {'form':form}
     return render(request,'FeedApp/profile.html',context)
 
@@ -50,9 +49,8 @@ def myfeed(request):
 
     zipped_list= zip(posts,comment_count_list, like_count_list)
 
-    context={'posts':posts, 'zipped_lists':zipped_list}
+    context={'posts':posts, 'zipped_list':zipped_list}
     return render(request,'FeedApp/myfeed.html',context)
-
 
 
 @login_required
@@ -74,16 +72,15 @@ def new_post(request):
 @login_required
 def comments(request,post_id):
     # if user clicks the comment button 
-    if request.method  == 'POST' and request.POST.get("btn1"):
-        comment =  request.POST.get("comment")
-        Comment.objects.create(post_id=post_id,username=request.user, text=comment, date_added= date.today())
+    if request.method == 'POST' and request.POST.get("btn1"):
+        comment = request.POST.get("comment")
+        Comment.objects.create(post_id = post_id,username=request.user,text=comment,date_added=date.today())
 
-    comments= Comment.objects.filter(post=post_id)
-    post = Post.objects.get(post=post_id)
-
-    context = {'post':post,'comments':comments}
-
+    comments=Comment.objects.filter(post=post_id)
+    post=Post.objects.get(id=post_id)
+    context={'post':post,'comments':comments}
     return render(request,'FeedApp/comments.html', context)
+    
 
 @login_required
 def friendsfeed(request):
@@ -109,7 +106,7 @@ def friendsfeed(request):
             return redirect("FeedApp:friendsfeed")
 
 
-    context={'posts':posts, 'zipped_lists':zipped_list}
+    context={'posts':posts, 'zipped_list':zipped_list}
     return render(request,'FeedApp/myfeed.html',context)
 
 
